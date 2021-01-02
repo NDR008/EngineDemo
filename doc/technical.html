@@ -1,0 +1,243 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2//EN">
+<html>
+<head>
+<TITLE>enginev5.0.pas</TITLE>
+<!-- Source: enginev5.0.pas -->
+<!-- Generated with ROBODoc Version 4.0.6 (Jul 15 2003) -->
+<!-- ROBODoc (c) 1994-2003 by Frans Slothouber and Jacco van Weert. -->
+</head>
+<body bgcolor="#FFFFFF">
+<a name="enginev5.0.pas">Generated from enginev5.0.pas</a> with <a href="http://sourceforge.net/projects/robodoc/">ROBODoc</a> v4.0.6 on Wed Oct 22 20:12:24 2003
+<br />
+<hr />
+
+<h2><a name="robo0">EngineRollingDemo/engine.pas</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       Rolling Engine Demo - See a four cylinder engine run.
+</pre><p><strong>COPYRIGHT</strong></p>
+<pre>           GNU GENERAL PUBLIC LICENSE
+                      Version 2, June 1991
+ Copyright (z2) 1989, 1991 Free Software Foundation, Inc.
+                       59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+    Engine Rollign Demo, an OpenGL rolling demo of how a 4 cylinder engine works.
+    Copyright (z2) 2003  Nadir Syed
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+       The GNU GPL 2, is included with the package.
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Learn about an engine, by viewing one run.
+       The idea is to create a rolling demo of 4 cylinders moving in an engine block.
+</pre><p><strong>INPUTS</strong></p>
+<pre>       Blend on or not.
+</pre><p><strong>RESULT</strong></p>
+<pre>       View demo in transperancy mode or not.
+</pre><p><strong>NOTES</strong></p>
+<pre>       To do this program, I was learning C++, OpenGL, and Pascal simultaneously.
+       Pitty my Linux box wasn't working.
+       nadir008@yahoo.com, www.toyota.vze.com, Nadir Syed Sammut - NDR008.
+</pre>
+<hr />
+
+<h2><a name="robo1">engine.pas/units:gl,glu,glut</a></h2>
+
+<p><strong>FUNCTION</strong></p>
+<pre>       gl is the main unit for opengl functionality, glu, and glut, aid opengl usage.
+</pre><p><strong>NOTES</strong></p>
+<pre>       Requires Opengl32.dll, Glu.dll, and the Glut.dll to run this kind of compiled program.
+</pre>
+<hr />
+
+<h2><a name="robo2">engine.pas/CentreCamera</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>CentreCamera</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Sets the camera in the middle, out of the screen, ready to draw the next
+ object with respect to the centre.
+</pre>
+<hr />
+
+<h2><a name="robo3">engine.pas/SetView</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       SetWiew
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Used to setup what portion of the 3D-world is viewed.
+</pre>
+<hr />
+
+<h2><a name="robo4">engine.pas/DrawBox</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>DrawBox</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       This is used to draw a cube, glut already has its own method of doing so.
+       But making your own procedures gives more flexibility,
+       and in complex engines is probably the only way to make things right.
+</pre><p><strong>INPUTS</strong></p>
+<pre>       x1=width of box,
+       y1=height of box,
+       z1=debth of box.
+       r,g,b represent red green blue for coloring the box.
+       a represents the alpha blending element (for translucency).
+</pre><p><strong>NOTES</strong></p>
+<pre>       glBegin and glEnd, enclose any OpenGL verteces or objects be drawn.
+ glBegin(GL_QUADS), this GL_QUADS informs opengl, that the following verteces are in pairs of 4, thus a a quad. By a combination of 6 squares, a cube is then formed).
+       Note that OpenGL expects the 4 verteces of a square to be told in order rotating clockwise or anti-clockwise.
+ glColor is used to tell opengl what color to draw an following verteces, values for a red, green, and blue element, as well as an alpha blending.
+</pre>
+<hr />
+
+<h2><a name="robo5">engine.pas/DrawCyl</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>DrawCyl</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       This is used to draw a box with 2 open opposite ends.
+</pre><p><strong>INPUTS</strong></p>
+<pre>       x1=width of box,
+       y1=height of box,
+       z1=debth of box.
+       r,g,b represent red green blue for coloring the box.
+       a represents the alpha blending element (for translucency).
+</pre>
+<hr />
+
+<h2><a name="robo6">engine.pas/YValue</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>YValue</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       You input the loop counter's value, and it will evaluate by how much must the box be translated.
+</pre><p><strong>NOTES</strong></p>
+<pre>       This function took the most to come up with, (2 days), and I had to solve it on paper, by
+       writing down a range of values for the main loop counter, and listing next to it, what Y value
+       would I want for each of these different main loop counter values. Then I made a liner
+       mathematical equation.
+</pre>
+<hr />
+
+<h2><a name="robo7">engine.pas/FuelExhaust</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>FuelExhaust</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Manages filling the empty space above the piston and draws the fuel/exhaust/explosion.
+</pre><p><strong>INPUTS</strong></p>
+<pre>       yanswer: simply half the <a href="#robo6">YValue</a>. The reason this is passed, and not calculated within
+       the procedure, is to minimise the number of times it has to be calculated.
+       i: this indicates which firing order is the piston, thus which colour should the
+       fuel/compression/explossion/exhuast be drawn.
+       c: this is simply just to indicate, if the drawin is for the 2 center pistons or the
+       2 external pistons.
+</pre>
+<hr />
+
+<h2><a name="robo8">engine.pas/MovingBox</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>MovingBox</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       To move the box to represent the moving cylinder.
+</pre><p><strong>NOTES</strong></p>
+<pre>       In brief, translates the camera, to draw the different objects, with their centre in different places.
+</pre>
+<hr />
+
+<h2><a name="robo9">engine.pas/CylinderWall</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>CylinderWall</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       To Draw the cylinder 'containers'
+</pre>
+<hr />
+
+<h2><a name="robo10">engine.pas/ClearScreen</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>ClearScreen</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Clears screen for the next rendering scene
+</pre>
+<hr />
+
+<h2><a name="robo11">engine.pas/keyboardcheck</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>keyboardcheck</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Checks the keyboard's keys, and alters any varriable if required.
+</pre>
+<hr />
+
+<h2><a name="robo12">engine.pas/DisplayWindow</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>DisplayWindow</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       This is where all the action happens. (The main loop).
+</pre><p><strong>NOTES</strong></p>
+<pre>       Clear screen.
+       Loop pointlessly. (The delay loop).
+       Draw piston + exhuast.
+       Draw Cylinders.
+       Centre Camera.
+       Draw a box as the engine block.
+       Check keyboard.
+       Draw all till now onto screen.
+       Check whether the main counter should be incrimented, and do so if required.
+       Incriment four if required (determines what stage is the 1st piston).
+</pre>
+<hr />
+
+<h2><a name="robo13">engine.pas/do_idle</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>do_idle</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       This is the procedure that is called when on idle.
+       Basicaly, it tells it to redisplay the display loop, in our case, <a href="#robo12">DisplayWindow</a>, unless
+       the boolean variable that states whether the q button has been pressed, in which case
+       the procedure then terminates the application.
+</pre>
+<hr />
+
+<h2><a name="robo14">engine.pas/SetWindow</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>SetWindow</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       This is used to setup the window in the windows environment.
+       In a nutshell, the initialisation of the win32 window.
+</pre>
+<hr />
+
+<h2><a name="robo15">engine.pas/ResChoice</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       <strong>ResChoice</strong>
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Menu to choose at which resolution to run the program.
+</pre>
+<hr />
+
+<h2><a name="robo16">engine.pas/init</a></h2>
+
+<p><strong>NAME</strong></p>
+<pre>       Nameless, this is the standard main pascal loop.
+</pre><p><strong>FUNCTION</strong></p>
+<pre>       Contains the main source which starts off everything else.
+</pre>
+</body>
+</html>
